@@ -1,4 +1,4 @@
-export type flowStep = "created" | "authorizing" | "received" | "ready" | "error";
+export type flowStep = "created" | "authorizing" | "received" | "ready" | "error" | "session_expired" | "user_cancelled" | "network_failed";
 
 export interface prescriptionResponse {
   sessionId: string;

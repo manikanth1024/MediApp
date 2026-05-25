@@ -65,4 +65,7 @@ export const stepStatus: any = {
   received: 2,
   ready: 3,
   error: -1,
+  session_expired: -1,
+  user_cancelled: -1,
+  network_failed: -1,
 };

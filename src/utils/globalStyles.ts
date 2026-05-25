@@ -15,6 +15,6 @@ export const rootStyles = StyleSheet.create({
     textSecondary: {color: Colors.textSecondary},
     ctaContent: { 
         marginTop: Spacing.xl, 
-        alignItems :  'center'
+        alignItems :  'center',
     },
 })

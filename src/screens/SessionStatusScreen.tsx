@@ -1,4 +1,4 @@
-import React, {useEffect } from "react";
+import React, {useEffect, useRef } from "react";
 import {View, StyleSheet} from 'react-native';
 import { rootStyles } from "../utils/globalStyles";
 import { checkSessionStatus, completePrescriptionSession, delay, startPrescriptionSession } from "../services/sessionStatusService";
@@ -10,6 +10,9 @@ import { statusSteps, stepStatus, strings } from "../utils/strings";
 import { StatusItem } from "../components/StepItem";
 import { Colors, FontSize, Spacing } from "../utils/theme";
 import { Label } from "../components/Label";
+import { Button } from "../components/Button";
+import { ErrorMessage } from "../components/ErrorMessage";
+import { flowStep } from "../utils/types";
 
 type props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'sessionstatus'>;
@@ -19,24 +22,31 @@ type props = {
 export const SessionStatusScreen: React.FC<props> = ({navigation}) => {
 
     const dispatch = useDispatch();
+    const abortFlowRef = useRef(false);
 
     const currentStep = useSelector((state: any) => state.sessionStatus.status)
 
     const startSessionFlow = async () => {
+        abortFlowRef.current = false;
         dispatch(setLoadingState(true))
         try {
             await startPrescriptionSession();
+            if(abortFlowRef.current) return;
 
             const authStatus = await checkSessionStatus('created');
+            if(abortFlowRef.current) return;
             dispatch(updateSessionStatus(authStatus))
 
             const receivedStatus = await checkSessionStatus(authStatus);
+            if(abortFlowRef.current) return;
             dispatch(updateSessionStatus(receivedStatus))
 
             const readyStatus = await checkSessionStatus(receivedStatus);
+            if(abortFlowRef.current) return;
             dispatch(updateSessionStatus(readyStatus))
 
             const prescriptionData = await completePrescriptionSession();
+            if(abortFlowRef.current) return;
             dispatch(savePrescriptionResult(prescriptionData));
 
             await delay(1500)
@@ -60,6 +70,18 @@ export const SessionStatusScreen: React.FC<props> = ({navigation}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
+    if(currentStep === 'error' || currentStep === 'session_expired' || currentStep === 'user_cancelled' 
+        || currentStep === 'network_failed') {
+            return <ErrorMessage status={currentStep} />
+    }
+
+    const onFailure = async (step: flowStep) => {
+        abortFlowRef.current = true;
+        const status = await checkSessionStatus(step)
+        console.log(status)
+        dispatch(updateSessionStatus(status));
+    }
+
     return (
         <View style={rootStyles.container}>
             <Label title={strings.sessionFlow.title} textStyle={styles.title} />
@@ -82,6 +104,28 @@ export const SessionStatusScreen: React.FC<props> = ({navigation}) => {
             }
             <Label title={strings.sessionFlow.subtitle} textStyle={styles.subtitle} />
             </View>
+            
+            <View style={[rootStyles.ctaContent]}>
+                <Button 
+                    label={'Expire session'}
+                    onPress={() => onFailure('session_expired')}
+                    style={{marginVertical: Spacing.md}}
+                    variant="danger"
+                />
+                <Button 
+                    label={'Cancel flow'}
+                    onPress={() => onFailure('user_cancelled')}
+                    style={{marginVertical: Spacing.md}}
+                    variant="danger"
+                />
+                <Button 
+                    label={'Fail network'}
+                    onPress={() => onFailure('network_failed')}
+                    style={{marginVertical: Spacing.md}}
+                    variant="danger"
+                />
+            </View>
+
         </View>
     )
 }
@@ -100,4 +144,7 @@ const styles = StyleSheet.create({
         color: Colors.textSecondary,
         paddingTop: Spacing.lg,
     },
+    buttonContent: {
+        flex: 1,
+    }
 })

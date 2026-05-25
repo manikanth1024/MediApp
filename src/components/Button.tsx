@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   ViewStyle,
   TextStyle,
-  Dimensions,
 } from 'react-native';
 import { Colors, FontSize, Radius, Spacing } from '../utils/theme';
 import { Label } from './Label';

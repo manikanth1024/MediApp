@@ -24,6 +24,7 @@ export const startPrescriptionSession = async (): Promise<{sessionId: string, st
 
 export const checkSessionStatus = async (currentStatus: flowStep): Promise<flowStep> => {
     await delay(1500)
+
     switch(currentStatus){
         case "created":
             return "authorizing";
@@ -31,6 +32,11 @@ export const checkSessionStatus = async (currentStatus: flowStep): Promise<flowS
             return "received";
         case "received":
             return "ready";
+        case "error":
+        case "session_expired":
+        case "user_cancelled":
+        case "network_failed":
+            return currentStatus;
         default:
             return currentStatus;
     }
