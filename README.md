@@ -1,97 +1,92 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+## To run the app
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+### Prerequisites
 
-## Step 1: Start Metro
+- Node.js v16 or higher
+- Java sdk 17 or higher
+- Xcode (for iOS development)/Android Studio (for Android development)
+- React Native setup here. [React Native Environment Setup](https://reactnative.dev/docs/environment-setup)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### Installation & Setup
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+1. **Clone the repository**
+   ```sh
+   git clone <repository-url>
+   cd MediApp
+   ```
 
-```sh
-# Using npm
-npm start
+2. **Install dependencies**
+   ```sh
+   yarn install
+   # or
+   npm install 
+   ```
 
-# OR using Yarn
-yarn start
+3. **Run the app (in a new terminal)**
+
+   **For iOS:**
+   - After npm install, install the iOS pods
+   ```sh 
+    cd iOS/pod install
+    ```
+   ```sh
+   yarn ios
+   # or
+   npm run ios
+   ```
+
+   **For Android:**
+   ```sh
+   yarn android
+   # or
+   npm run android
+   ```
+---
+
+## Tech Stack
+
+- **Framework Used**: React Native Cli
+- **Language Used**: TypeScript
+- **State Management Used**: Redux, Redux Toolkit
+- **Navigation**: React Navigation (Native Stack)
+
+---
+
+## Folder Structure Overview
+
+```
+MediApp/src/
+    -- components/              # Reusable UI components
+        ── Button.tsx           # Custom button component
+        ── Label.tsx            # Text label component
+        ── ErrorMessage.tsx     # Error message display component
+        ── PrescriptionDetailsCard.tsx  # Prescription card display
+        ── StepItem.tsx         # Status step indicator
+    
+    ── screens/                 # Screen components
+        ── StartScreen.tsx      # Initial app screen
+        ── SessionStatusScreen.tsx    # Session status tracking
+        ── PrescriptionReviewScreen.tsx  # Review prescription details
+        ── OrderConfirmationScreen.tsx   # Order confirmation
+
+    ── navigation/              # Navigation configuration
+        ── StackNavigator.tsx   # Stack navigator setup
+
+    ── services/                # API/SDK services
+        ── sessionStatusService.ts  # Mock session and prescription API
+    
+    -─ store/                   # Redux state management
+        ── store.ts             # Redux store configuration
+        ── slices/
+            ── sessionStatusSlice.ts  # Session status reducer
+            -- prescriptionReviewSlice.ts # prescription review reducer
+
+    ── utils/                   # Utility functions & constants
+        ── globalStyles.ts      # Global stylesheet
+        ── strings.ts           # String constants & status mappings
+        ── theme.ts             # Color, spacing, font constants
+        -─ types.ts             # TypeScript type definitions
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+---
