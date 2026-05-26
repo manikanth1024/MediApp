@@ -28,7 +28,7 @@
    **For iOS:**
    - After npm install, install the iOS pods
    ```sh 
-    cd iOS/pod install
+    cd ios/pod install
     ```
    ```sh
    yarn ios
@@ -110,7 +110,8 @@ MediApp/src/
 
 **Check Session Status** (`checkSessionStatus`)
     -- Then we're calling the checkSessionStatus method from the state `created` -> ``authorizing` → `received` → `ready`
-    -- This same method also handles error states to show the error message to the user if the mock api fails i.e., `error` | `session_expired` | `user_cancellation` | `network_failure`
+    -- This same method also handles error states to show the error message to the user if the mock api fails i.e., `error` | `session_expired` | `user_cancellation` | `network_failure`.
+
 **Complete Prescription Session** (`completePrescriptionSession`)
     -- This method will be called after the checkSessionStatus is success and returns the `ready` state
     -- This method will return the mocked prescription review api data
@@ -165,16 +166,16 @@ MediApp/src/
 **Preparation for internal testing:**
 
 ### iOS internal testing build
-    -- After the ios profile is created for the specific app u want to create a build for,
-    -- Add the user who wants to test the app under internal testers section appstore console
-    -- To create a build for iOS, from the xcode filemenu select the `Product` tab and click Archive and select the approriate build type and click next to push the app to testflight
-    -- The user who wants to test it must install the testflight app on their iOS device and they install the app from testflight.
+- After the ios profile is created for the specific app u want to create a build for,
+- Add the user who wants to test the app under internal testers section appstore console
+- To create a build for iOS, from the xcode filemenu select the `Product` tab and click Archive and select the approriate build type and click next to push the app to testflight
+- The user who wants to test it must install the testflight app on their iOS device and they install the app from testflight.
 
 ### Android internal testing build
-    -- After the keystore file is created for the specific app
-    -- Add the user who wants to test the app under alpha/beta testing section
-    -- To create the build for Android, simply navigate to ```cd android``` and enter the given command ```./gradlew build ``` to create a build 
-    -- After the build is created an .aab file will be generated and that .aab file can be pushed direcly to playstore console alpha/beta section.
+- After the keystore file is created for the specific app
+- Add the user who wants to test the app under alpha/beta testing section
+- To create the build for Android, simply navigate to ```cd android``` and enter the given command ```./gradlew build ``` to create a build 
+- After the build is created an .aab file will be generated and that .aab file can be pushed direcly to playstore console alpha/beta section.
 
 ### Known Limitations
 
