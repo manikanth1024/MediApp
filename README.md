@@ -42,6 +42,11 @@
    # or
    npm run android
    ```
+    **Troubleshooting tip for Android:**
+    - If any gradlew issues or build issues, simply run
+    ```sh
+    cd android/.gradlew clean ```
+
 ---
 
 ## Tech Stack
