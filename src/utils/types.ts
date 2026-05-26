@@ -9,21 +9,12 @@ export interface prescriptionResponse {
   pharmacyId: string;
   pharmacyName: string
 };
-
-export type PrescriptionError = 'SERVICE_UNAVAILABLE'
-  | 'SESSION_EXPIRED'
-  | 'USER_CANCELLED'
-  | 'PRESCRIPTION_DATA_MISSING'
-  | 'NETWORK_REQUEST_FAILED'
-  | 'UNSUPPORTED_DEVICE';
-
 export interface OrderReviewRequest {
   sessionId: string;
   prescriptionReference: string;
   pharmacyId: string;
   patientReference: string;
 }
-
 export interface OrderReviewResponse {
   orderId: string;
   status: string;
