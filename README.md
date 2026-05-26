@@ -1,5 +1,5 @@
 
-## To run the app
+## To run the medi-app
 
 ### Prerequisites
 
@@ -117,13 +117,18 @@ MediApp/src/
 
 ## Assumptions Made
 
-**Single Session Flow**: App handles one prescription session per launch
-**User Authentication**: Assumes user is pre-authenticated before app launch
-**Patient Data**: Prescription and patient data are assumed to exist in the pharmacy system
-**Network Connectivity**: App assumes network is available (no offline mode)
-**Pharmacy Availability**: Single pharmacy (ABC Pharmacy) is pre-configured in demo
+**Single Session Flow:**
+    - App handles one prescription session per launch.
+**User Authentication:** 
+    - Assumes user is pre-authenticated before app launch.
+**Mock Patient Data:** 
+    - Prescription and patient data are assumed to exist in the pharmacy system.
+**Network Connectivity:**
+    - App assumes network is available (no offline mode).
+**Pharmacy Availability:** 
+    - Single pharmacy (ABC Pharmacy) is pre-configured in demo.
 
-## Implemented 4 Error States 
+## Error States 
 
 **error**
     -- Standard error state
@@ -151,28 +156,42 @@ MediApp/src/
 
 **Why tokens must not be logged:** Full tokens can replay prescription retrieval. Logging them violates HIPAA/GDPR and creates exploitable audit trails.
 
-**Secure storage in production:** Use React native secure storage to store the tokens and other sensitive data but not in the Async storage because its not encrypted
+**Secure storage in production:** Use React native secure storage to store the tokens and other sensitive data but not in the Async storage because its not encrypted.
 
-**Auth:** User must be authorized to start the startPrescriptionFlow and must send the jwt token to access other parts of the app after login
+**Auth:** User must be authorized to start the startPrescriptionFlow and must send the jwt token to access other parts of the app after login.
 
 **Replacing the mock SDK:** Use the methods imported from sdk/api in prescriptionReviewService.ts and sessionStatusService.ts to make it work in production.
-**Preparation for internal testing:** 
-## iOS internal testing build
+
+**Preparation for internal testing:**
+
+### iOS internal testing build
     -- After the ios profile is created for the specific app u want to create a build for,
     -- Add the user who wants to test the app under internal testers section appstore console
     -- To create a build for iOS, from the xcode filemenu select the `Product` tab and click Archive and select the approriate build type and click next to push the app to testflight
     -- The user who wants to test it must install the testflight app on their iOS device and they install the app from testflight.
 
-## Android internal testing build
+### Android internal testing build
     -- After the keystore file is created for the specific app
     -- Add the user who wants to test the app under alpha/beta testing section
     -- To create the build for Android, simply navigate to ```cd android``` and enter the given command ```./gradlew build ``` to create a build 
     -- After the build is created an .aab file will be generated and that .aab file can be pushed direcly to playstore console alpha/beta section.
 
-## Known Limitations
+### Known Limitations
 
 - No persistance is added for the stored in redux, state will be lost on app restart 
 - setTimeout-based delays to check the each status returned from checkPrescriptionStatus method (not real polling), called it multiple times until it returned the ready state.
 - Manual button clicks required for error testing, user must manually restart flow after errors.
 - Only one pharamcy is supoorted in start prescription flow, user can't select the multiple pharmacies.
 - Data is hardcoded in each and every api call happening across the app
+
+### Change in production
+- User can select the pharamcy from the list of pharamacies in the Start Prescription screen
+- In Session Status screen, will implement the methods imported from sdk/api to change the status without using any time delays, so there won't be any mock data will be required.
+- Implement camera integration to capture the uploaded prisciption receipt and uses ocr to extract the prescription content.
+- Integrate the authentication flow like jwt/OAuth for the user to login into the app, stores jwt token into the secure storage.
+- Required data  other than sensitive data will be stored permanantly in async storage.
+- Handles error states and messages caught automatically and add the retry logics.
+- Integrate the monitoring system to handle any crash reports and analytics to handle the user logs.
+- Builds will be configured as per the environment for testing, pre-prod and production releases.
+
+
