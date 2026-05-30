@@ -12,12 +12,12 @@
 
 1. **Clone the repository**
    ```sh
-   git clone <repository-url>
-   cd MediApp
+   git clone https://github.com/manikanth1024/MediApp.git
    ```
 
 2. **Install dependencies**
    ```sh
+    cd MediApp
    yarn install
    # or
    npm install 
